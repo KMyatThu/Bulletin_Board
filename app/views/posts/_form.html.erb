@@ -13,11 +13,18 @@
       <div class="col-md-2"> <%= form.label :description %> </div>
         <div class="col-md-6"> <%= form.text_area :description , required: true %> </div>
     </div>
+    <% if edit == 1 %>
+    <div class="form-group row">
+      <div class="col-md-2"> <%= form.label :status %> </div>
+      <div class="col-md-6"> <%= form.check_box :status%> </div>
+      </div>
+    <% end %>
+    <%= form.hidden_field :id %>
     <br/>
     <div class="form-group row mb-0">
 	  <div class="col-md-2 offset-md-2">
-      <%= form.submit "Create" %>
-      <%= button_tag "Clear", type: :reset %>
+      <%= form.submit edit == 1 ? "Update" : "Create"%>
+      <%= button_tag edit == 1 ? "Reset" : "Clear", type: :reset %>
 	  </div>
     <% end %>
   </div>

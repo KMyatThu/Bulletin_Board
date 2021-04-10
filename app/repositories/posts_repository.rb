@@ -5,12 +5,25 @@ class PostsRepository
   end
 
   # Get Post Detail
-  def self.getPostDetail(id)
+  def self.getPostById(id)
     @post = Post.find(id)
   end
 
   # Create new Post
   def self.createPost(post)
     isSavePost = post.save
+  end
+
+  # function Update Post
+  # params post
+  # return isUpdatePost
+  def self.updatePost(post, post_params)
+    isUpdatePost = post.update(post_params)
+  end
+
+  # function delete post
+  # params id
+  def self.deletePost(post)
+    post.destroy
   end
 end

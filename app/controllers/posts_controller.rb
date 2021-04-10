@@ -2,11 +2,15 @@ class PostsController < ApplicationController
   # index post list
   def index
     @posts = PostsService.postList
+    respond_to do |format|
+      format.html
+      format.csv { send_data @posts.to_csv }
+    end
   end
 
   # Post Detail
   def show
-    @post = PostsService.postDetail(params[:id])
+    @post = PostsService.getPostById(params[:id])
   end
 
   # New Post form
@@ -24,10 +28,42 @@ class PostsController < ApplicationController
     end
   end
 
+  # Edit Post Form
+  def edit
+    @post = PostsService.getPostById(params[:id])
+  end
+
+  # Update post
+  def update
+    isUpdatePost = PostsService.updatePost(post_params)
+    if isUpdatePost
+      redirect_to root_path
+    else
+      render :new
+    end
+  end
+
+  def destroy
+    PostsService.deletePost(params[:id])
+    redirect_to root_path
+  end
+
+  def downloadPost
+    @posts = Post.all
+    respond_to do |format|
+      format.xlsx {
+        response.headers[
+          'Content-Disposition'
+        ] = "attachment; filename='posts.xlsx'"
+      }
+      format.html { render :index }
+    end
+  end
+
   private
 
   # post parameters
   def post_params
-    params.require(:post).permit(:title, :description, :status, :create_user_id, :updated_user_id, :updated_at)
+    params.require(:post).permit(:id, :title, :description, :status, :create_user_id, :updated_user_id, :updated_at)
   end
 end
