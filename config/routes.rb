@@ -16,6 +16,13 @@ Rails.application.routes.draw do
       post :create_confirm
       get :create_confirm
     end
+    member do
+      get :profile
+      get :edit_profile
+      patch :update_profile
+      get :change_password
+      post :update_password
+    end
   end
 
   get '/login' => 'sessions#login'

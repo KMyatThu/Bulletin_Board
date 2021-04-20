@@ -29,4 +29,23 @@ class UsersService
     user = getUserById(id)
     UsersRepository.deleteUser(user)
   end
+
+  # function: update profile
+  # params: user profile
+  # return: isUpdateProfile(boolean)
+  def self.updateProfile(user_params)
+    UsersRepository.updateProfile(user_params)
+  end
+
+  # function: update password
+  # params: password params
+  # return: isPasswordUpdate(boolean)
+  def self.updatePassword(params)
+    user = getUserById(params[:id])
+    if user.password == params[:password] && params[:new_password] == params[:new_password_confirmation]
+      password = BCrypt::Password.create(params[:new_password])
+      UsersRepository.updatePassword(user,password)
+      isPasswordUpdate = true
+    end
+  end
 end

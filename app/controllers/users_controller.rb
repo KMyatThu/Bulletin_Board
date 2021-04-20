@@ -5,6 +5,9 @@ class UsersController < ApplicationController
     @users = UsersService.userList
   end
 
+  # function: User Detai
+  # params: id
+  # return: user
   def show
     @user = UsersService.getUserById(params[:id])
   end
@@ -50,6 +53,58 @@ class UsersController < ApplicationController
   def destroy
     UsersService.deleteUser(params[:id])
     redirect_to users_path
+  end
+
+  # function: User Profile
+  # params: id
+  # return: user
+  def profile
+    @user = UsersService.getUserById(params[:id])
+  end
+
+  # function: editProfile
+  # params: id
+  # return: user
+  def edit_profile
+    @user = UsersService.getUserById(params[:id])
+  end
+
+  # function: update profile
+  # params: user profile params
+  def update_profile
+    user = User.new(user_params)
+    unless user_params[:profile].nil?
+      dir = "#{Rails.root}/app/assets/profiles/"
+      FileUtils.mkdir_p(dir) unless File.directory?(dir)
+      profilename = user_params[:name]+ "_" + Time.now.strftime('%Y%m%d_%H%M%S') + "." + ActiveStorage::Filename.new(user_params[:profile].original_filename).extension
+      File.open(Rails.root.join('app/assets/', 'images', profilename ), 'wb') do |f|
+          f.write(user_params[:profile].read)
+      end
+      user.profile = profilename
+    end
+    user.role = user.role == "Admin" ? 0 : 1
+    isUpdateProfile = UsersService.updateProfile(user)
+    if isUpdateProfile
+      redirect_to users_path
+    else
+      render :edit_profile
+    end
+  end
+
+  # function: password change form
+  # params: id
+  def change_password
+
+  end
+
+  # function: update change password
+  def update_password
+    isUpdatePassword = UsersService.updatePassword(params)
+    if isUpdatePassword
+      redirect_to users_path
+    else
+      render :change_password
+    end
   end
 
   private
