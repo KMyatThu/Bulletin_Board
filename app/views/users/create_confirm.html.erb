@@ -1,0 +1,53 @@
+<div class="card">
+  <div class="card-header">
+    Create User
+  </div>
+  <div class="card-body">
+    <%= form_with model: @user do |form| %>
+    <div class="form-group row">
+      <div class="col-md-2"> <%= form.label :name %> </div>
+        <div class="col-md-6"><%= form.text_field :name , required: true %></div>
+      </div>
+    <br/>
+    <div class="form-group row">
+      <div class="col-md-2"> <%= form.label "E-Mail Address" %> </div>
+        <div class="col-md-6"> <%= form.text_field :email %> </div>
+    </div><br/>
+    <div class="form-group row">
+      <div class="col-md-2"> <%= form.label :password %> </div>
+      <div class="col-md-6"> <%= form.password_field :password, :value => @user.password %> </div>
+    </div><br/>
+    <div class="form-group row">
+      <div class="col-md-2"> <%= form.label :password_confirmation  %> </div>
+      <div class="col-md-6"> <%= form.password_field :password_confirmation, :value => @user.password_confirmation %> </div>
+    </div><br/>
+    <div class="form-group row">
+      <div class="col-md-2"> <%= form.label "Type" %> </div>
+      <div class="col-md-6"> <%= form.text_field :role, :value => User.types.values[@user.role.to_i] %> </div>
+    </div><br/>
+    <div class="form-group row">
+      <div class="col-md-2"> <%= form.label :phone %> </div>
+      <div class="col-md-6"> <%= form.text_field :phone %> </div>
+    </div><br/>
+    <div class="form-group row">
+      <div class="col-md-2"> <%= form.label "Date of Birth" %> </div>
+      <div class="col-md-6"> <%= form.text_field :dob %> </div>
+    </div><br/>
+    <div class="form-group row">
+      <div class="col-md-2"> <%= form.label :address %> </div>
+      <div class="col-md-6"> <%= form.text_field :address %> </div>
+    </div><br/>
+    <div class="form-group row">
+      <div class="col-md-2"> <%= form.label :profile %> </div>
+      <div class="col-md-6"> <%= image_tag @user.profile, style: 'height:150px;width:auto;' %> </div>
+    </div>
+    <br/>
+    <%= form.hidden_field :profile, :value => @user.profile %>
+    <div class="form-group row mb-0">
+	  <div class="col-md-2 offset-md-2">
+      <%= form.submit "Create"%>
+      <%= button_tag "Clear", type: :reset %>
+	  </div>
+    <% end %>
+  </div>
+</div>

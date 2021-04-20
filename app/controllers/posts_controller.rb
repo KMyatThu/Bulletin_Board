@@ -48,16 +48,12 @@ class PostsController < ApplicationController
     redirect_to root_path
   end
 
-  def downloadPost
-    @posts = Post.all
-    respond_to do |format|
-      format.xlsx {
-        response.headers[
-          'Content-Disposition'
-        ] = "attachment; filename='posts.xlsx'"
-      }
-      format.html { render :index }
-    end
+  def import
+    Post.import(params[:file])
+    redirect_to root_path, notice: "CSV uploaded"
+  end
+
+  def upload
   end
 
   private
