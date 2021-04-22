@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_065829) do
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.text "name", null: false
     t.text "email", null: false
-    t.text "password", null: false
+    t.string "password_digest", null: false
     t.string "profile", null: false
     t.string "role", limit: 1, null: false
     t.string "phone", limit: 20

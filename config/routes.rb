@@ -7,6 +7,16 @@ Rails.application.routes.draw do
     collection do
       post :import
       get :upload
+      post :post_form
+      get :post_form, to: "posts#new"
+      post :create_confirm
+      get :create_confirm
+      get :search_post
+    end
+    member do
+      patch :post_edit_form
+      get :update_confirm
+      post :post_update
     end
   end
   
@@ -14,7 +24,8 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       post :create_confirm
-      get :create_confirm
+      get :create_confirm, to: "users#new"
+      get :search_user
     end
     member do
       get :profile
@@ -27,4 +38,5 @@ Rails.application.routes.draw do
 
   get '/login' => 'sessions#login'
   post '/login' => 'sessions#create'
+  delete "/session", to: "sessions#destroy"
 end

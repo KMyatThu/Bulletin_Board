@@ -38,4 +38,11 @@ class PostsService
       post = getPostById(id)
       PostsRepository.deletePost(post)
     end
+
+    # function: post search
+    # params: keyword
+    # return: posts
+    def self.searchPost(keyword)
+      posts = PostsRepository.searchPostbyKeyWord(keyword)
+    end
 end

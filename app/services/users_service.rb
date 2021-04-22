@@ -42,10 +42,19 @@ class UsersService
   # return: isPasswordUpdate(boolean)
   def self.updatePassword(params)
     user = getUserById(params[:id])
-    if user.password == params[:password] && params[:new_password] == params[:new_password_confirmation]
-      password = BCrypt::Password.create(params[:new_password])
-      UsersRepository.updatePassword(user,password)
-      isPasswordUpdate = true
+    if user.authenticate(params[:password]) && params[:new_password] == params[:new_password_confirmation]
+      isPasswordUpdate = UsersRepository.updatePassword(user,params[:new_password])
     end
+  end
+
+  # function: Search user
+  # params: search params
+  # return: users
+  def self.searchuser(keyword)
+    name = keyword[:name]
+    email = keyword[:email]
+    from_date = keyword[:from_date]
+    to_date = keyword[:to_date]
+    users = UsersRepository.searchuser(name, email, from_date, to_date)
   end
 end

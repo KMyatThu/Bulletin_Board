@@ -19,11 +19,9 @@
             Admin
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="/users/6/profile">Profile</a></li>
+            <li><a class="dropdown-item" href="/users/<%= current_user.id %>/profile">Profile</a></li>
             <li>
-              <a class="dropdown-item" href="#">
-                logout
-              </a>
+              <%= link_to "Logout", session_path, method: :delete, class: "dropdown-item" %>
             </li>
           </ul>
         </li>

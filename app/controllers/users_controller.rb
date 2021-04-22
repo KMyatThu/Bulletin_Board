@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  # User List
-  # Return userlist
+  before_action :authorized
+  # function: User List
+  # Return: userlist
   def index
     @users = UsersService.userList
   end
@@ -22,19 +23,20 @@ class UsersController < ApplicationController
   # params: user form
   # return: user form
   def create_confirm
-    user = User.new(user_params)
-    unless user.valid?
-      render new_user_path, errors: @user.errors.full_messages
+    @user = User.new(user_params)
+    unless @user.valid?
+      render new_user_path
     end
     # save profile image
-    dir = "#{Rails.root}/app/assets/profiles/"
-    FileUtils.mkdir_p(dir) unless File.directory?(dir)
-    profilename = user_params[:name]+ "_" + Time.now.strftime('%Y%m%d_%H%M%S') + "." + ActiveStorage::Filename.new(user_params[:profile].original_filename).extension
-    File.open(Rails.root.join('app/assets/', 'images', profilename ), 'wb') do |f|
-        f.write(user_params[:profile].read)
+    if user_params.has_key?(:profile)
+      dir = "#{Rails.root}/app/assets/profiles/"
+      FileUtils.mkdir_p(dir) unless File.directory?(dir)
+      profilename = user_params[:name]+ "_" + Time.now.strftime('%Y%m%d_%H%M%S') + "." + ActiveStorage::Filename.new(user_params[:profile].original_filename).extension
+      File.open(Rails.root.join('app/assets/', 'images', profilename ), 'wb') do |f|
+          f.write(user_params[:profile].read)
+      end
+      @user.profile = profilename
     end
-    user.profile = profilename
-    @user = user
   end
 
   # function: Create User
@@ -99,12 +101,21 @@ class UsersController < ApplicationController
 
   # function: update change password
   def update_password
-    isUpdatePassword = UsersService.updatePassword(params)
-    if isUpdatePassword
+    isPasswordUpdate = UsersService.updatePassword(params)
+    if isPasswordUpdate
       redirect_to users_path
     else
+      @notice = "Password are not Match"
       render :change_password
     end
+  end
+
+  # function: User Search
+  # params: search param
+  # return: users
+  def search_user
+    @users = UsersService.searchuser(params)
+    render :index
   end
 
   private

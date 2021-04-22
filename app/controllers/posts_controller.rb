@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
-  # index post list
+  before_action :authorized
+  # function: index(post List)
+  # return: posts
   def index
     @posts = PostsService.postList
     respond_to do |format|
@@ -8,17 +10,42 @@ class PostsController < ApplicationController
     end
   end
 
-  # Post Detail
+  # function: Post Detail
+  # params: id
+  # return: post
   def show
     @post = PostsService.getPostById(params[:id])
   end
 
-  # New Post form
+  # function: new post
+  # return: post(new)
   def new
     @post = Post.new
   end
 
-  # Create a new Post
+  # function: post_form
+  # params: post params
+  # return: post
+  def post_form
+    @post = Post.new(post_params)
+    unless @post.valid?
+      render :new
+    else
+      redirect_to :action => "create_confirm", title: @post.title, description: @post.description
+    end
+  end
+
+  # function: create_confirm
+  # params: title,description
+  # return: post
+  def create_confirm
+    @title = params[:title]
+    @description = params[:description]
+    @post = Post.new(title: @title, description: @description)
+  end
+
+  # function: create post
+  # params: post_params
   def create
     isSavePost = PostsService.createPost(post_params)
     if isSavePost
@@ -28,13 +55,38 @@ class PostsController < ApplicationController
     end
   end
 
-  # Edit Post Form
+  # function: Edit Post
+  # params: id
+  # return: post
   def edit
     @post = PostsService.getPostById(params[:id])
   end
 
+  # function: post edit form
+  # params: post params
+  # return: post
+  def post_edit_form
+    @post = Post.new(post_params)
+    unless @post.valid?
+      render :edit
+    else
+      redirect_to :action => "update_confirm", title: @post.title, description: @post.description, state: @post.status, id: @post.id
+    end
+  end
+
+  # function: update_confirm
+  # params: title,description,status
+  # return: post form
+  def update_confirm
+    @id = params[:id]
+    @title = params[:title]
+    @description = params[:description]
+    @status = params[:state]
+    @post = Post.new(title: @title, description: @description, status: @status, id: @id)
+  end
+
   # Update post
-  def update
+  def post_update
     isUpdatePost = PostsService.updatePost(post_params)
     if isUpdatePost
       redirect_to root_path
@@ -54,6 +106,15 @@ class PostsController < ApplicationController
   end
 
   def upload
+  end
+
+  # function: search post
+  # params: params(keyword)
+  # return: posts
+  def search_post
+    keyword = params[:keyword]
+    @posts = PostsService.searchPost(keyword)
+    render :index
   end
 
   private

@@ -6,36 +6,36 @@
     <%= form_with model: @user do |form| %>
     <div class="form-group row">
       <div class="col-md-2"> <%= form.label :name %> </div>
-        <div class="col-md-6"><%= form.text_field :name , required: true %></div>
+        <div class="col-md-6"><%= form.text_field :name, :readonly => true %></div>
       </div>
     <br/>
     <div class="form-group row">
       <div class="col-md-2"> <%= form.label "E-Mail Address" %> </div>
-        <div class="col-md-6"> <%= form.text_field :email %> </div>
+        <div class="col-md-6"> <%= form.text_field :email, :readonly => true %> </div>
     </div><br/>
     <div class="form-group row">
       <div class="col-md-2"> <%= form.label :password %> </div>
-      <div class="col-md-6"> <%= form.password_field :password, :value => @user.password %> </div>
+      <div class="col-md-6"> <%= form.password_field :password, :value => @user.password, :readonly => true %> </div>
     </div><br/>
     <div class="form-group row">
       <div class="col-md-2"> <%= form.label :password_confirmation  %> </div>
-      <div class="col-md-6"> <%= form.password_field :password_confirmation, :value => @user.password_confirmation %> </div>
+      <div class="col-md-6"> <%= form.password_field :password_confirmation, :value => @user.password_confirmation, :readonly => true %> </div>
     </div><br/>
     <div class="form-group row">
       <div class="col-md-2"> <%= form.label "Type" %> </div>
-      <div class="col-md-6"> <%= form.text_field :role, :value => User.types.values[@user.role.to_i] %> </div>
+      <div class="col-md-6"> <%= form.text_field :role, :value => User.types.values[@user.role.to_i], :readonly => true %> </div>
     </div><br/>
     <div class="form-group row">
       <div class="col-md-2"> <%= form.label :phone %> </div>
-      <div class="col-md-6"> <%= form.text_field :phone %> </div>
+      <div class="col-md-6"> <%= form.text_field :phone, :readonly => true %> </div>
     </div><br/>
     <div class="form-group row">
       <div class="col-md-2"> <%= form.label "Date of Birth" %> </div>
-      <div class="col-md-6"> <%= form.text_field :dob %> </div>
+      <div class="col-md-6"> <%= form.text_field :dob, :readonly => true %> </div>
     </div><br/>
     <div class="form-group row">
       <div class="col-md-2"> <%= form.label :address %> </div>
-      <div class="col-md-6"> <%= form.text_field :address %> </div>
+      <div class="col-md-6"> <%= form.text_field :address, :readonly => true %> </div>
     </div><br/>
     <div class="form-group row">
       <div class="col-md-2"> <%= form.label :profile %> </div>

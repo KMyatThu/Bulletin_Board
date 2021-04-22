@@ -49,4 +49,19 @@ class UsersRepository
       'password' => password
     )
   end
+
+  # function: search user
+  # params: search params
+  # return: users
+  def self.searchuser(name, email, from_date, to_date)
+    if from_date.present? and to_date.present?
+      users = User.where("name like ? and email like ? and created_at >= ? and created_at <= ?", "%" + name + "%", "%" + email + "%", from_date, Date.parse(to_date)+1)
+    elsif from_date.present?
+      users = User.where("name like ? and email like ? and created_at >= ?", "%" + name + "%", "%" + email + "%", from_date)
+    elsif to_date.present?
+      users = User.where("name like ? and email like ? and created_at <= ?", "%" + name + "%", "%" + email + "%", Date.parse(to_date)+1)
+    else
+      users = User.where("name like ? and email like ?", "%" + name + "%", "%" + email + "%")
+    end
+  end
 end

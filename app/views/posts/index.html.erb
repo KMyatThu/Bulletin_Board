@@ -4,6 +4,12 @@
   <div class="card-header">
     Post List
   </div>
+  <div class="py-4">
+        <%= form_tag( { :action => :search_post }, { :method => :get }) do %>
+          <%= text_field_tag :keyword, params[:keyword] %>
+          <%= submit_tag ("Search") %>
+        <% end %>
+    </div>
   <div class="card-body"> 
     <table class="table table-responsive table-bordered">
         <thead>
