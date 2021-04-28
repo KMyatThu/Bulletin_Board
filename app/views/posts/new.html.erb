@@ -1,29 +1,38 @@
-<div class="card">
-  <div class="card-header">
-    Create Post
-  </div>
-  <div class="card-body">
-    <%= form_with model: @post, url: post_form_posts_path do |form| %>
-    <ul>
-        <% @post.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-        <% end %>
-    </ul>
-    <div class="form-group row">
-      <div class="col-md-2"> <%= form.label :title %> </div>
-        <div class="col-md-6"><%= form.text_field :title %></div>
-      </div>
-    <br/>
-    <div class="form-group row">
-      <div class="col-md-2"> <%= form.label :description %> </div>
-        <div class="col-md-6"> <%= form.text_area :description %> </div>
+<div class="card card_option">
+    <div class="card-header">
+        Create Post
     </div>
-    <br/>
-    <div class="form-group row mb-0">
-	  <div class="col-md-2 offset-md-2">
-      <%= form.submit "Create"%>
-      <%= button_tag "Clear", type: :reset %>
-	  </div>
-    <% end %>
-  </div>
+    <div class="card-body">
+        <%= form_with model: @post, url: post_form_posts_path, :html => { :style => 'width: 80%;' } do |form| %>
+            <ul>
+                <% @post.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label :title %> </div>
+                <div class="col-sm-7"><%= form.text_field :title, class: "form-control" %></div>
+            </div>
+            <br/>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label :description %> </div>
+                <div class="col-sm-7"> <%= form.text_area :description, class: "form-control" %> </div>
+            </div>
+            <br/>
+            <div class="form-group row mb-0">
+                <div class="col-sm-5 col-form-label text-end"> </div>
+                <div class="col-sm-7">
+                    <%= form.submit "Create", class: 'btn btn-primary' %>
+                    <%= button_tag "Clear", class: 'btn btn-secondary', type: :reset %>
+                </div>
+            </div>
+        <% end %>
+    </div>
 </div>
+
+<style>
+.card_option{
+    width: 50rem;
+    margin: 0 auto;
+}
+</style>

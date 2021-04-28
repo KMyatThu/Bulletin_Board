@@ -1,57 +1,66 @@
-<div class="card">
-  <div class="card-header">
-    Create User
-  </div>
-  <div class="card-body">
-    <%= form_with model: @user, url: create_confirm_users_path do |form| %>
-    <ul>
-        <% @user.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-        <% end %>
-    </ul>
-    <div class="form-group row">
-      <div class="col-md-2"> <%= form.label :name %> </div>
-        <div class="col-md-6"><%= form.text_field :name, :autocomplete => :off %></div>
-      </div>
-    <br/>
-    <div class="form-group row">
-      <div class="col-md-2"> <%= form.label "E-Mail Address" %> </div>
-        <div class="col-md-6"> <%= form.text_field :email , required: true %> </div>
-    </div><br/>
-    <div class="form-group row">
-      <div class="col-md-2"> <%= form.label :password %> </div>
-      <div class="col-md-6"> <%= form.password_field :password %> </div>
-    </div><br/>
-    <div class="form-group row">
-      <div class="col-md-2"> <%= form.label :password_confirmation  %> </div>
-      <div class="col-md-6"> <%= form.password_field :password_confirmation %> </div>
-    </div><br/>
-    <div class="form-group row">
-      <div class="col-md-2"> <%= form.label "Type" %> </div>
-      <div class="col-md-6"> <%= form.collection_select :role , User.types, :first, :last %> </div>
-    </div><br/>
-    <div class="form-group row">
-      <div class="col-md-2"> <%= form.label :phone %> </div>
-      <div class="col-md-6"> <%= form.text_field :phone %> </div>
-    </div><br/>
-    <div class="form-group row">
-      <div class="col-md-2"> <%= form.label "Date of Birth" %> </div>
-      <div class="col-md-6"> <%= form.text_field :dob, id: 'datepicker', :autocomplete => :off %> </div>
-    </div><br/>
-    <div class="form-group row">
-      <div class="col-md-2"> <%= form.label :address %> </div>
-      <div class="col-md-6"> <%= form.text_field :address %> </div>
-    </div><br/>
-    <div class="form-group row">
-      <div class="col-md-2"> <%= form.label :profile %> </div>
-      <div class="col-md-6"> <%= form.file_field :profile %> </div>
+<div class="card card_option">
+    <div class="card-header">
+        Register
     </div>
-    <br/>
-    <div class="form-group row mb-0">
-	  <div class="col-md-2 offset-md-2">
-      <%= form.submit "Create"%>
-      <%= button_tag "Clear", type: :reset %>
-	  </div>
-    <% end %>
-  </div>
+    <div class="card-body">
+        <%= form_with model: @user, url: create_confirm_users_path, :html => { :style => 'width: 80%;' } do |form| %>
+            <ul>
+                <% @user.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label :name %> </div>
+                <div class="col-sm-7"><%= form.text_field :name, class: "form-control", :autocomplete => :off %></div>
+            </div>
+            <br/>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label "E-Mail Address" %> </div>
+                <div class="col-sm-7"> <%= form.text_field :email, class: "form-control" %> </div>
+            </div>
+            <br/>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label :password %> </div>
+                <div class="col-sm-7"> <%= form.password_field :password, class: "form-control" %> </div>
+            </div><br/>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label :password_confirmation %> </div>
+                <div class="col-sm-7"> <%= form.password_field :password_confirmation, class: "form-control" %> </div>
+            </div><br/>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label "Type" %> </div>
+                <div class="col-sm-7"> <%= form.collection_select :role , User.types, :first, :last, {include_blank: false}, {class: 'form-control'} %> </div>
+            </div><br/>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label :phone %> </div>
+                <div class="col-sm-7"> <%= form.text_field :phone, class: "form-control" %> </div>
+            </div><br/>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label "Date of Birth" %> </div>
+                <div class="col-sm-7"> <%= form.text_field :dob, id: 'datepicker', :autocomplete => :off, class: "form-control" %> </div>
+            </div><br/>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label :address %> </div>
+                <div class="col-sm-7"> <%= form.text_field :address, class: "form-control" %> </div>
+            </div><br/>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label :profile %> </div>
+                <div class="col-sm-7"> <%= form.file_field :profile, class: "form-control" %> </div>
+            </div><br/>
+            <div class="form-group row mb-0">
+                <div class="col-sm-5 col-form-label text-end"> </div>
+                <div class="col-sm-7">
+                    <%= form.submit "Create", class: 'btn btn-primary' %>
+                    <%= button_tag "Clear", class: 'btn btn-secondary', type: :reset %>
+                </div>
+            </div>
+        <% end %>
+    </div>
 </div>
+
+<style>
+.card_option{
+    width: 50rem;
+    margin: 0 auto;
+}
+</style>

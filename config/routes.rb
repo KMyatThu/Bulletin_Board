@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :posts do 
     collection do
       post :import
+      get :import
       get :upload
       post :post_form
       get :post_form, to: "posts#new"
@@ -17,6 +18,7 @@ Rails.application.routes.draw do
       patch :post_edit_form
       get :update_confirm
       post :post_update
+      get :pop_up
     end
   end
   

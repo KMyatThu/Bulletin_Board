@@ -47,7 +47,7 @@ class PostsController < ApplicationController
   # function: create post
   # params: post_params
   def create
-    isSavePost = PostsService.createPost(post_params)
+    isSavePost = PostsService.createPost(post_params,current_user)
     if isSavePost
       redirect_to root_path
     else
@@ -85,9 +85,10 @@ class PostsController < ApplicationController
     @post = Post.new(title: @title, description: @description, status: @status, id: @id)
   end
 
-  # Update post
+  # function: Update post
+  # params: post_params
   def post_update
-    isUpdatePost = PostsService.updatePost(post_params)
+    isUpdatePost = PostsService.updatePost(post_params,current_user)
     if isUpdatePost
       redirect_to root_path
     else
@@ -95,16 +96,26 @@ class PostsController < ApplicationController
     end
   end
 
+  # function: Post Delete
+  # params: id
   def destroy
-    PostsService.deletePost(params[:id])
+    PostsService.deletePost(params[:id],current_user[:id])
     redirect_to root_path
   end
 
+  # function: post import
+  # params: file
   def import
-    Post.import(params[:file])
-    redirect_to root_path, notice: "CSV uploaded"
+    if (params[:file].nil?)
+      flash.now[:notice] = "Please choose a file."
+      render :upload
+    else 
+      Post.import(params[:file])
+      redirect_to root_path, notice: "CSV uploaded"
+    end
   end
 
+  # function: post upload page
   def upload
   end
 

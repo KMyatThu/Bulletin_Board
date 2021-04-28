@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   # function: Create User
   # params: user form
   def create
-    isRegistUser = UsersService.createUser(user_params)
+    isRegistUser = UsersService.createUser(user_params,current_user)
     if isRegistUser
       redirect_to users_path
     else
@@ -53,7 +53,7 @@ class UsersController < ApplicationController
   # function: Delete user
   # params: id
   def destroy
-    UsersService.deleteUser(params[:id])
+    UsersService.deleteUser(params[:id],current_user[:id])
     redirect_to users_path
   end
 
@@ -84,8 +84,7 @@ class UsersController < ApplicationController
       end
       user.profile = profilename
     end
-    user.role = user.role == "Admin" ? 0 : 1
-    isUpdateProfile = UsersService.updateProfile(user)
+    isUpdateProfile = UsersService.updateProfile(user,current_user)
     if isUpdateProfile
       redirect_to users_path
     else

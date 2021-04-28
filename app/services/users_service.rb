@@ -14,27 +14,30 @@ class UsersService
   # function: create user
   # params: user form
   # return: isSaveUser
-  def self.createUser(user)
+  def self.createUser(user,current_user)
     user = User.new(user)
     user.role = user.role == "Admin" ? 0 : 1
-    user.create_user_id = 1
-    user.updated_user_id = 1
+    user.create_user_id = current_user.id
+    user.updated_user_id = current_user.id
     user.updated_at = Time.now
     isSaveUser = UsersRepository.createUser(user)
   end
 
   # function: delete user
   # params: id
-  def self.deleteUser(id)
+  def self.deleteUser(id,deleted_user_id)
     user = getUserById(id)
-    UsersRepository.deleteUser(user)
+    UsersRepository.deleteUser(user,deleted_user_id)
   end
 
   # function: update profile
-  # params: user profile
+  # params: user_params, current_user
   # return: isUpdateProfile(boolean)
-  def self.updateProfile(user_params)
-    UsersRepository.updateProfile(user_params)
+  def self.updateProfile(user_params, current_user)
+    user = getUserById(user_params[:id])
+    user.updated_user_id = current_user.id
+    user_params.profile = user.profile unless user_params.profile.present?
+    isUpdateProfile = UsersRepository.updateProfile(user,user_params)
   end
 
   # function: update password

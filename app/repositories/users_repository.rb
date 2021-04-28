@@ -2,7 +2,7 @@ class UsersRepository
   # function: get all Users
   # return: users
   def self.getAllUsers
-    @users = User.all
+    @users = User.where(deleted_user_id: nil)
   end
 
   # function: get user by id
@@ -21,15 +21,15 @@ class UsersRepository
 
   # function: delete user
   # params: user
-  def self.deleteUser(user)
-    user.destroy
+  def self.deleteUser(user,deleted_user_id)
+    user.update_attribute(:deleted_at, Time.now)
+    user.update_attribute(:deleted_user_id, deleted_user_id)
   end
 
   # function: update profile
   # params: user
   # return: isUpdateProfile(boolean)
-  def self.updateProfile(user_params)
-    user = User.find(user_params[:id])
+  def self.updateProfile(user,user_params)
     isUpdateProfile = user.update(
       'name' => user_params[:name],
       'email' => user_params[:email],

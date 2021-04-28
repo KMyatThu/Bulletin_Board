@@ -14,11 +14,11 @@ class PostsService
     # Create new Post
     # params post_params
     # return isSavePost
-    def self.createPost(post_params)
+    def self.createPost(post_params,current_user)
       post = Post.new(post_params)
       post.status = 1 # default when create
-      post.create_user_id = 1 #It will change when user is created
-      post.updated_user_id = 1 #It will change when user is created
+      post.create_user_id = current_user.id
+      post.updated_user_id = current_user.id
       post.updated_at = Time.now
       isSavePost = PostsRepository.createPost(post)
     end
@@ -26,17 +26,18 @@ class PostsService
     # Update Post
     # params post
     # return isUpdatePost
-    def self.updatePost(post_params)
+    def self.updatePost(post_params,current_user)
       post = getPostById(post_params[:id])
       post.updated_at = Time.now
+      post.updated_user_id = current_user.id
       isUpdatePost = PostsRepository.updatePost(post,post_params)
     end
 
     # function Delete Post
     # params id
-    def self.deletePost(id)
-      post = getPostById(id)
-      PostsRepository.deletePost(post)
+    def self.deletePost(post_id,deleted_user_id)
+      post = getPostById(post_id)
+      PostsRepository.deletePost(post,deleted_user_id)
     end
 
     # function: post search

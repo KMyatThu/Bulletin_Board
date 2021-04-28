@@ -2,7 +2,7 @@ class PostsRepository
   # function: Get All Post List
   # return: posts
   def self.getPostList
-    @posts = Post.all
+    @posts = Post.where(deleted_user_id: nil)
   end
 
   # function: Get Post Detail
@@ -28,8 +28,9 @@ class PostsRepository
 
   # function: delete post
   # params: id
-  def self.deletePost(post)
-    post.destroy
+  def self.deletePost(post,deleted_user_id)
+    post.update_attribute(:deleted_at, Time.now)
+    post.update_attribute(:deleted_user_id, deleted_user_id)
   end
 
   # function: search post by keyword
