@@ -37,6 +37,6 @@ class PostsRepository
   # params: keyword
   # return: posts
   def self.searchPostbyKeyWord(keyword)
-    posts = Post.where("title like ? or description like ?", "%" + keyword + "%", "%" + keyword + "%")
+    posts = Post.where(deleted_user_id: nil).where("title like ? or description like ?", "%" + keyword + "%", "%" + keyword + "%")
   end
 end

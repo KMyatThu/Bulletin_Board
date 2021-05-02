@@ -55,13 +55,13 @@ class UsersRepository
   # return: users
   def self.searchuser(name, email, from_date, to_date)
     if from_date.present? and to_date.present?
-      users = User.where("name like ? and email like ? and created_at >= ? and created_at <= ?", "%" + name + "%", "%" + email + "%", from_date, Date.parse(to_date)+1)
+      users = User.where(deleted_user_id: nil).where("name like ? and email like ? and created_at >= ? and created_at <= ?", "%" + name + "%", "%" + email + "%", from_date, Date.parse(to_date)+1)
     elsif from_date.present?
-      users = User.where("name like ? and email like ? and created_at >= ?", "%" + name + "%", "%" + email + "%", from_date)
+      users = User.where(deleted_user_id: nil).where("name like ? and email like ? and created_at >= ?", "%" + name + "%", "%" + email + "%", from_date)
     elsif to_date.present?
-      users = User.where("name like ? and email like ? and created_at <= ?", "%" + name + "%", "%" + email + "%", Date.parse(to_date)+1)
+      users = User.where(deleted_user_id: nil).where("name like ? and email like ? and created_at <= ?", "%" + name + "%", "%" + email + "%", Date.parse(to_date)+1)
     else
-      users = User.where("name like ? and email like ?", "%" + name + "%", "%" + email + "%")
+      users = User.where(deleted_user_id: nil).where("name like ? and email like ?", "%" + name + "%", "%" + email + "%")
     end
   end
 end

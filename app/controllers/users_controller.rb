@@ -99,12 +99,13 @@ class UsersController < ApplicationController
   end
 
   # function: update change password
+  # params: password params
   def update_password
     isPasswordUpdate = UsersService.updatePassword(params)
     if isPasswordUpdate
       redirect_to users_path
     else
-      @notice = "Password are not Match"
+      @notice = "Current password is incorrect or New password are not match"
       render :change_password
     end
   end
@@ -120,6 +121,6 @@ class UsersController < ApplicationController
   private
   # User params
   def user_params
-    params.require(:user).permit(:id, :name, :email, :password, :password_confirmation, :role, :phone, :dob, :address, :profile)
+    params.require(:user).permit(:id, :name, :email, :password, :password_confirmation, :role, :phone, :dob, :address, :profile, :create_user_id, :updated_user_id)
   end
 end

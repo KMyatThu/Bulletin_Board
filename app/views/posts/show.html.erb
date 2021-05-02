@@ -21,7 +21,7 @@
         </div>
         <div class="form-group row p-3">
             <div class="col-sm-3"> Created User: </div>
-            <div class="col-sm-9"><%= @post.create_user_id %></div>
+            <div class="col-sm-9"><%= @post.created_user.name %></div>
         </div>
         <div class="form-group row p-3">
             <div class="col-sm-3"> Updated Date: </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="form-group row p-3">
             <div class="col-sm-3"> Updated User: </div>
-            <div class="col-sm-9"><%= @post.updated_user_id %></div>
+            <div class="col-sm-9"><%= @post.updated_user.name %></div>
         </div>
     </div>
 </div>

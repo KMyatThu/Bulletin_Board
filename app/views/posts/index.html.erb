@@ -43,7 +43,7 @@
                 <tr>
                     <td><%= link_to post.title, post, class: 'text-decoration-none', "data-toggle" => 'mediumButton', 'data-target' => post %></td>
                     <td><%= post.description %></td>
-                    <td><%= post.create_user_id %></td>
+                    <td><%= post.created_user.name %></td>
                     <td><%= post.created_at.strftime('%Y/%m/%d') %></td>
                     <td><%= link_to "Edit", edit_post_path(post),class: 'btn btn-primary' %>
                     <%= link_to "Destroy", post_path(post),

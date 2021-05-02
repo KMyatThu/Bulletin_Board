@@ -19,6 +19,8 @@
                 <div class="col-sm-7"> <%= form.text_area :description, class: "form-control" %> </div>
             </div>
             <br/>
+            <%= form.number_field :create_user_id, value: current_user.id.to_i, type: :hidden %>
+            <%= form.number_field :updated_user_id, value: current_user.id.to_i, type: :hidden %>
             <div class="form-group row mb-0">
                 <div class="col-sm-5 col-form-label text-end"> </div>
                 <div class="col-sm-7">

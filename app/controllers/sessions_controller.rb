@@ -5,7 +5,11 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
+      if params[:remember_me]
+        cookies.permanent[:user_id] = @user.id
+      else
+        cookies[:user_id] = { :value => @user.id, :expires => Time.now + 3600}
+      end
       redirect_to root_path
     else
       message = "Login is invalid!"
@@ -18,7 +22,7 @@ class SessionsController < ApplicationController
 
   # function: logout
   def destroy
-    session[:user_id] = nil
+    cookies.delete(:user_id)
     redirect_to login_path
   end
 end

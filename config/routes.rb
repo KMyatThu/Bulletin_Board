@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       patch :update_profile
       get :change_password
       post :update_password
+      get :update_password
     end
   end
 

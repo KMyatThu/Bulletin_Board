@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_12_065829) do
+ActiveRecord::Schema.define(version: 2021_05_02_082111) do
 
   create_table "posts", charset: "utf8mb4", force: :cascade do |t|
     t.string "title", null: false
@@ -22,9 +22,11 @@ ActiveRecord::Schema.define(version: 2021_04_12_065829) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["create_user_id"], name: "fk_rails_7254f98eaf"
+    t.index ["updated_user_id"], name: "fk_rails_bf7d327639"
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "users", id: :integer, charset: "utf8mb4", force: :cascade do |t|
     t.text "name", null: false
     t.text "email", null: false
     t.string "password_digest", null: false
@@ -39,6 +41,10 @@ ActiveRecord::Schema.define(version: 2021_04_12_065829) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["create_user_id"], name: "fk_rails_bc60bf1428"
   end
 
+  add_foreign_key "posts", "users", column: "create_user_id"
+  add_foreign_key "posts", "users", column: "updated_user_id"
+  add_foreign_key "users", "users", column: "create_user_id"
 end
