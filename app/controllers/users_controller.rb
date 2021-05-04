@@ -105,8 +105,7 @@ class UsersController < ApplicationController
     if isPasswordUpdate
       redirect_to users_path
     else
-      @notice = "Current password is incorrect or New password are not match"
-      render :change_password
+      redirect_to change_password_user_path, notice: "Current password is incorrect or New password are not match"
     end
   end
 

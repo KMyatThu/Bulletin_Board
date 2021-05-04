@@ -4,7 +4,10 @@ class SessionsController < ApplicationController
   # params: email,password
   def create
     @user = User.find_by(email: params[:email])
-    if @user && @user.authenticate(params[:password])
+    if !@user
+      message = "Email not Exits"
+      redirect_to login_path, notice: message
+    elsif @user && @user.authenticate(params[:password])
       if params[:remember_me]
         cookies.permanent[:user_id] = @user.id
       else
@@ -12,7 +15,7 @@ class SessionsController < ApplicationController
       end
       redirect_to root_path
     else
-      message = "Login is invalid!"
+      message = "Incorrect Password!"
       redirect_to login_path, notice: message
     end
   end

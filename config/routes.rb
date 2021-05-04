@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'password_resets/new'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'posts#index'
 
@@ -38,6 +39,7 @@ Rails.application.routes.draw do
       get :update_password
     end
   end
+  resources :password_resets
 
   get '/login' => 'sessions#login'
   post '/login' => 'sessions#create'
