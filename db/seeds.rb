@@ -5,15 +5,19 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create(name: 'user01',
-            email:'user01@gmail.com',
-            password: "1234",
-            profile: "user01.jpg",
-            role: 1,
-            phone: "09254312",
-            address: "Insein",
-            dob: "2021-04-01",
-            create_user_id: 1,
-            updated_user_id: 1,
-            updated_at: Time.now
-          )
+unless Rails.env.production?
+  connection = ActiveRecord::Base.connection
+  connection.tables.each do |table|
+    connection.execute("TRUNCATE #{table}") unless table == "schema_migrations"
+  end
+
+  sql = File.read('db/user.sql')
+  statements = sql.split(/;$/)
+  statements.pop
+
+  ActiveRecord::Base.transaction do
+    statements.each do |statement|
+      connection.execute(statement)
+    end
+  end
+end

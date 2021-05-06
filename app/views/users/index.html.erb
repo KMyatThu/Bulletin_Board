@@ -63,7 +63,7 @@
                 <td><%= user.created_user.name %></td>
                 <td><%= user.role == "0" ? 'Admin' : 'User' %></td>
                 <td><%= user.phone %></td>
-                <td><%= user.dob.strftime('%Y/%m/%d') %></td>
+                <td><%= user.dob.strftime('%Y/%m/%d') if user.dob.present? %></td>
                 <td><%= user.address %></td>
                 <td><%= user.created_at.strftime('%Y/%m/%d') %></td>
                 <td><%= user.updated_at.strftime('%Y/%m/%d') %></td>

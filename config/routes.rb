@@ -44,4 +44,7 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#login'
   post '/login' => 'sessions#create'
   delete "/session", to: "sessions#destroy"
+  get '/sign_up' => 'sessions#sign_up'
+  post '/create_account' => 'sessions#create_account'
+  get '/create_account' => 'sessions#sign_up'
 end

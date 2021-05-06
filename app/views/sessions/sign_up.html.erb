@@ -1,0 +1,51 @@
+<h1> Sing up </h1>
+<div class="card card_option">
+    <div class="card-header">
+        Register
+    </div>
+    <div class="card-body">
+        <%= form_with model: @user, url: create_account_path, :html => { :style => 'width: 80%;' } do |form| %>
+            <ul>
+                <% @user.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+            </ul>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label :name %> </div>
+                <div class="col-sm-7"><%= form.text_field :name, class: "form-control", :autocomplete => :off %></div>
+            </div>
+            <br/>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label "E-Mail Address" %> </div>
+                <div class="col-sm-7"> <%= form.text_field :email, class: "form-control" %> </div>
+            </div>
+            <br/>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label :password %> </div>
+                <div class="col-sm-7"> <%= form.password_field :password, class: "form-control" %> </div>
+            </div><br/>
+            <div class="form-group row">
+                <div class="col-sm-5 col-form-label text-end"> <%= form.label :password_confirmation %> </div>
+                <div class="col-sm-7"> <%= form.password_field :password_confirmation, class: "form-control" %> </div>
+            </div><br/>
+            <%= form.hidden_field :role, value: "1" %>
+            <%= form.hidden_field :profile, value: "user01.jpg" %>
+            <%= form.number_field :create_user_id, value: 1, type: :hidden %>
+            <%= form.number_field :updated_user_id, value: 1, type: :hidden %>
+            <div class="form-group row mb-0">
+                <div class="col-sm-5 col-form-label text-end"> </div>
+                <div class="col-sm-7">
+                    <%= form.submit "Create", class: 'btn btn-primary' %>
+                    <%= button_tag "Clear", class: 'btn btn-secondary', type: :reset %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
+
+<style>
+.card_option{
+    width: 50rem;
+    margin: 0 auto;
+}
+</style>
