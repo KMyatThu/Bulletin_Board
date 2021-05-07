@@ -3,11 +3,11 @@ class SessionsController < ApplicationController
   # function: Login
   # params: email,password
   def create
-    @user = User.find_by(email: params[:email])
+    @user = User.find_by(email: params[:user][:email])
     if !@user
       message = "Email not Exits"
       redirect_to login_path, notice: message
-    elsif @user && @user.authenticate(params[:password])
+    elsif @user && @user.authenticate(params[:user][:password])
       if params[:remember_me]
         cookies.permanent[:user_id] = @user.id
       else
@@ -24,11 +24,10 @@ class SessionsController < ApplicationController
   end
 
   def login
-
+    @user = User.new
   end
 
   def show
-
   end
 
   # function: logout
@@ -49,7 +48,7 @@ class SessionsController < ApplicationController
     if !@user.valid?
       render :sign_up
     elsif @user.save!
-      redirect_to :url => "login", :method => "post", email: @user.email, password: @user.password 
+      create
     else
       render :sign_up
     end
