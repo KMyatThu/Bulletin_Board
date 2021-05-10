@@ -8,6 +8,7 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -64,7 +65,10 @@
     $(document).ready( function () {
       dataTable = $('#table_id').DataTable({
             "searching": false,
-            stateSave: true
+            "ordering": false,
+            "bLengthChange": false,
+            "info": false,
+            "pageLength": 5
         }).draw();
     } );
     </script>

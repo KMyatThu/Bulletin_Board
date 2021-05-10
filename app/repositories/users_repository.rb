@@ -31,13 +31,13 @@ class UsersRepository
   # return: isUpdateProfile(boolean)
   def self.updateProfile(user,user_params)
     isUpdateProfile = user.update(
-      'name' => user_params[:name],
-      'email' => user_params[:email],
-      'role' => user_params[:role],
-      'phone' => user_params[:phone],
-      'dob' => user_params[:dob],
-      'address' => user_params[:address],
-      'profile' => user_params[:profile]
+      'name' => user_params.name,
+      'email' => user_params.email,
+      'role' => user_params.role,
+      'phone' => user_params.phone,
+      'dob' => user_params.dob,
+      'address' => user_params.address,
+      'profile' => user_params.profile
     )
   end
 

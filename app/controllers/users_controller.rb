@@ -68,23 +68,34 @@ class UsersController < ApplicationController
   # params: id
   # return: user
   def edit_profile
-    @user = UsersService.getUserById(params[:id])
+    user = UsersService.getUserById(params[:id])
+    @user_profile_form = UserProfileForm.new(UserProfileForm.attributes(user, :new_profile))
   end
 
   # function: update profile
   # params: user profile params
   def update_profile
-    user = User.new(user_params)
-    unless user_params[:profile].nil?
+    @user_profile_form = UserProfileForm.new(user_profile_params)
+    if !@user_profile_form.valid?
+      render :edit_profile
+    elsif user_profile_params[:new_profile].present?
       dir = "#{Rails.root}/app/assets/profiles/"
       FileUtils.mkdir_p(dir) unless File.directory?(dir)
-      profilename = user_params[:name]+ "_" + Time.now.strftime('%Y%m%d_%H%M%S') + "." + ActiveStorage::Filename.new(user_params[:profile].original_filename).extension
+      profilename = user_profile_params[:name]+ "_" + Time.now.strftime('%Y%m%d_%H%M%S') + "." + ActiveStorage::Filename.new(user_profile_params[:new_profile].original_filename).extension
       File.open(Rails.root.join('app/assets/', 'images', profilename ), 'wb') do |f|
-          f.write(user_params[:profile].read)
+          f.write(user_profile_params[:new_profile].read)
       end
-      user.profile = profilename
+      @user_profile_form.profile = profilename
+      to_update_profile(@user_profile_form,current_user)
+    else
+      to_update_profile(@user_profile_form,current_user)
     end
-    isUpdateProfile = UsersService.updateProfile(user,current_user)
+  end
+
+  # function: to update profile
+  # params: user, current_user
+  def to_update_profile(user_profile_form,current_user)
+    isUpdateProfile = UsersService.updateProfile(user_profile_form,current_user)
     if isUpdateProfile
       redirect_to users_path
     else
@@ -95,17 +106,22 @@ class UsersController < ApplicationController
   # function: password change form
   # params: id
   def change_password
-
+    @password_change_form = UserChangePasswordForm.new
   end
 
   # function: update change password
   # params: password params
   def update_password
-    isPasswordUpdate = UsersService.updatePassword(params)
-    if isPasswordUpdate
-      redirect_to users_path
+    @password_change_form = UserChangePasswordForm.new(change_password_params)
+    if !@password_change_form.valid?
+      render :change_password
     else
-      redirect_to change_password_user_path, notice: "Current password is incorrect or New password are not match"
+    isPasswordUpdate = UsersService.updatePassword(change_password_params)
+      if isPasswordUpdate
+        redirect_to users_path
+      else
+        redirect_to change_password_user_path, notice: "Change Password is something wrong"
+      end
     end
   end
 
@@ -121,5 +137,15 @@ class UsersController < ApplicationController
   # User params
   def user_params
     params.require(:user).permit(:id, :name, :email, :password, :password_confirmation, :role, :phone, :dob, :address, :profile, :create_user_id, :updated_user_id)
+  end
+
+  # User Profile Params
+  def user_profile_params
+    params.require(:user_profile_form).permit(:id, :name, :email, :role, :phone, :dob, :address, :profile, :new_profile)
+  end
+
+  # User Change Password Params
+  def change_password_params
+    params.require(:user_change_password_form).permit(:id, :current_password, :new_password, :new_password_confirmation)
   end
 end

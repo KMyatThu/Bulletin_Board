@@ -33,10 +33,11 @@ Rails.application.routes.draw do
     member do
       get :profile
       get :edit_profile
-      patch :update_profile
+      post :update_profile
+      get :update_profile, to: "users#edit_profile"
       get :change_password
       post :update_password
-      get :update_password
+      get :update_password, to: "users#change_password"
     end
   end
   resources :password_resets

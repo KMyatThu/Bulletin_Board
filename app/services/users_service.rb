@@ -33,11 +33,11 @@ class UsersService
   # function: update profile
   # params: user_params, current_user
   # return: isUpdateProfile(boolean)
-  def self.updateProfile(user_params, current_user)
-    user = getUserById(user_params[:id])
+  def self.updateProfile(user_profile_form, current_user)
+    user = getUserById(user_profile_form.id)
     user.updated_user_id = current_user.id
-    user_params.profile = user.profile unless user_params.profile.present?
-    isUpdateProfile = UsersRepository.updateProfile(user,user_params)
+    # user_params.profile = user.profile unless user_params.profile.present?
+    isUpdateProfile = UsersRepository.updateProfile(user,user_profile_form)
   end
 
   # function: update password
@@ -45,7 +45,7 @@ class UsersService
   # return: isPasswordUpdate(boolean)
   def self.updatePassword(params)
     user = getUserById(params[:id])
-    if user.authenticate(params[:password]) && params[:new_password] == params[:new_password_confirmation]
+    if user.authenticate(params[:current_password]) && params[:new_password] == params[:new_password_confirmation]
       isPasswordUpdate = UsersRepository.updatePassword(user,params[:new_password])
     end
   end

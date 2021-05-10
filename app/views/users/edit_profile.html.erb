@@ -3,9 +3,9 @@
         Profile Edit
     </div>
     <div class="card-body">
-        <%= form_with model: @user, :url => update_profile_user_path(@user), :html => { :style => 'width: 80%;' } do |form| %>
+        <%= form_with model: @user_profile_form, :url => update_profile_user_path(@user_profile_form.id), :method => :post, :html => { :style => 'width: 80%;' } do |form| %>
             <ul>
-                <% @user.errors.full_messages.each do |msg| %>
+                <% @user_profile_form.errors.full_messages.each do |msg| %>
                     <li><%= msg %></li>
                 <% end %>
             </ul>
@@ -41,8 +41,9 @@
             </div>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label "New Profile" %> </div>
-                <div class="col-sm-7"> <%= form.file_field :profile, class: "form-control" %> </div>
+                <div class="col-sm-7"> <%= form.file_field :new_profile, class: "form-control" %> </div>
             </div><br/>
+            <%= form.hidden_field :profile, :value => @user.profile %>
             <%= form.hidden_field :id, :value => @user.id %>
             <div class="form-group row mb-0">
                 <div class="col-sm-5 col-form-label text-end"> </div>
