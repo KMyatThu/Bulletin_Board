@@ -64,4 +64,11 @@ class UsersRepository
       users = User.where(deleted_user_id: nil).where("name like ? and email like ?", "%" + name + "%", "%" + email + "%")
     end
   end
+
+  # function: Get User By Email
+  # params: email
+  # return: user
+  def self.getUserByEmail(email)
+    user = User.where(deleted_user_id: nil).find_by(email)
+  end
 end

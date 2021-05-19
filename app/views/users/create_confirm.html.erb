@@ -45,7 +45,7 @@
             </div><br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label :profile %> </div>
-                <div class="col-sm-7"> <%= image_tag @user.profile, style: 'height:150px;width:auto;' %> </div>
+                <div class="col-sm-7"> <%= image_tag 'profiles/'+@user.profile, style: 'height:150px;width:auto;' %> </div>
             </div><br/>
             <%= form.hidden_field :profile, :value => @user.profile %>
             <div class="form-group row mb-0">

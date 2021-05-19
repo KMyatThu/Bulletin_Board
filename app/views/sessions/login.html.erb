@@ -1,40 +1,41 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card card_margin">
                 <div class="card-header">Log in</div>
                 <% if notice %><div class="alert alert-danger"><%= notice %> </div> <% end %>
-                <div class="card-body">
+                <div class="card-body card-body-margin">
                     <%= form_with model: @user, url: login_path , method: :post do |form|%>
                         <div class="form-group row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">Email Address:</label>
+                            <label for="email" class="col-md-4 col-form-label text-end">Email Address:</label>
 
                             <div class="col-md-6">
                              <%= form.text_field :email, class: 'form-control', :required => 'true'%>
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                            <label for="password" class="col-md-4 col-form-label text-end">Password:</label>
 
                             <div class="col-md-6">
                              <%= form.password_field :password, class: 'form-control', :required => 'true'%>
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <div class="col-md-8 offset-md-4">
+                            <div class="col-md-6 offset-md-4">
                               <%= check_box_tag :remember_me, 1, params[:remember_me] %>
-                                <%= label_tag :remember_me %><br>
+                                <%= label_tag :remember_me %>
+                                <%= link_to "forgotten password?", new_password_reset_path, class:"fogot_password"%>
+                                <br>
                             </div>
                         </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <%= submit_tag "Log In" , class: "btn btn-primary center-block"%>
-                                <%= link_to "forgotten password?", new_password_reset_path %>
+                                <%= submit_tag "Log In" , class: "col-md-9 btn btn-primary center-block"%>
                             </div>
                         </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <%= link_to "Create account?", sign_up_path %>
+                                <%= link_to sign_up_path, class:"text-decoration-none" do %> Create account? <i class="fas fa-user-plus"></i> <% end %>
                             </div>
                         </div>
                     <% end %>

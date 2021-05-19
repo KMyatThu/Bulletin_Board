@@ -1,0 +1,23 @@
+.card_option{
+  width: 50rem;
+  margin: 0 auto;
+}
+
+.operation_button{
+  width: 50px;
+}
+
+.card_margin{
+  margin-top: 100px;
+}
+
+.fogot_password{
+  margin-left: 30%;
+  text-decoration: none;
+}
+
+.card-body-margin{
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
+

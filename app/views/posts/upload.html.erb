@@ -2,9 +2,9 @@
     <div class="card-header">
         Upload CSV file
     </div>
-    <% flash.each do |type, msg| %>
+    <% if notice %>
       <div class="alert alert-danger">
-          <%= msg %>
+          <%= notice %>
       </div>
     <% end %>
     <div class="card-body p-5">

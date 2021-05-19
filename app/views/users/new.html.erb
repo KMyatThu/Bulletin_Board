@@ -4,32 +4,40 @@
     </div>
     <div class="card-body">
         <%= form_with model: @user, url: create_confirm_users_path, :html => { :style => 'width: 80%;' } do |form| %>
-            <ul>
-                <% @user.errors.full_messages.each do |msg| %>
-                    <li><%= msg %></li>
-                <% end %>
-            </ul>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label :name %> </div>
-                <div class="col-sm-7"><%= form.text_field :name, class: "form-control", :autocomplete => :off %></div>
+                <div class="col-sm-7">
+                    <%= form.text_field :name, class: "form-control", :autocomplete => :off %>
+                    <div class="text-danger"><% if @user.errors[:name].any? %><%= Messages::USER_NAME_VALIDATION %><% end %></div>
+                </div>
             </div>
             <br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label "E-Mail Address" %> </div>
-                <div class="col-sm-7"> <%= form.text_field :email, class: "form-control" %> </div>
+                <div class="col-sm-7"> <%= form.text_field :email, class: "form-control" %> 
+                    <div class="text-danger"> <% if @user.errors[:email].length == 2 %> <%= Messages::USER_EMAIL_VALIDATION %>
+                        <% elsif @user.errors[:email].length == 1 %> <%= Messages::USER_EMAIL_REGIX_VALIDATION %> <% end %>
+                    </div>
+                </div>
             </div>
             <br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label :password %> </div>
-                <div class="col-sm-7"> <%= form.password_field :password, class: "form-control" %> </div>
+                <div class="col-sm-7"> 
+                    <%= form.password_field :password, class: "form-control" %> 
+                    <div class="text-danger"> <% if @user.errors[:password].any? %><%= Messages::USER_PASSWORD_VALIDATION %><% end %> </div>
+                </div>
             </div><br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label :password_confirmation %> </div>
-                <div class="col-sm-7"> <%= form.password_field :password_confirmation, class: "form-control" %> </div>
+                <div class="col-sm-7"> 
+                    <%= form.password_field :password_confirmation, class: "form-control" %>
+                    <div class="text-danger"> <% if @user.errors[:password_confirmation].any? %><%= Messages::USER_PASSWORD_CONFIRMATION_MATCHING_VALIDATION %><% end %> </div>
+                </div>
             </div><br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label "Type" %> </div>
-                <div class="col-sm-7"> <%= form.collection_select :role , User.types, :first, :last, {include_blank: false}, {class: 'form-control'} %> </div>
+                <div class="col-sm-7"> <%= form.collection_select :role , Constants::TYPES, :first, :last, {include_blank: false}, {class: 'form-select'} %> </div>
             </div><br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label :phone %> </div>
@@ -37,7 +45,7 @@
             </div><br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label "Date of Birth" %> </div>
-                <div class="col-sm-7"> <%= form.text_field :dob, id: 'datepicker', :autocomplete => :off, class: "form-control" %> </div>
+                <div class="col-sm-7"> <%= form.date_field :dob, :autocomplete => :off, class: "form-control" %> </div>
             </div><br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label :address %> </div>
@@ -45,7 +53,10 @@
             </div><br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label :profile %> </div>
-                <div class="col-sm-7"> <%= form.file_field :profile, class: "form-control" %> </div>
+                <div class="col-sm-7"> 
+                    <%= form.file_field :profile, class: "form-control" %>
+                    <div class="text-danger"> <% if @user.errors[:profile].any? %><%= Messages::USER_PROFILE_VALIDATION %><% end %> </div>
+                </div>
             </div><br/>
             <%= form.number_field :create_user_id, value: current_user.id.to_i, type: :hidden %>
             <%= form.number_field :updated_user_id, value: current_user.id.to_i, type: :hidden %>

@@ -4,6 +4,12 @@
       Post List
     </div>
 
+    <% if notice %>
+        <div class="alert alert-success" role="alert">
+            <%= notice %>
+        </div>
+    <% end %>
+
     <div class="container d-flex flex-row-reverse py-4">
         <%= form_tag({ :action => :search_post }, { :method => :get, class:"row g-3", :html => { :style => 'width: 80%;' }}) do %>
             <div class="col-auto align-self-center">
@@ -13,16 +19,16 @@
                 <%= text_field_tag :keyword, params[:keyword], class: "form-control", style: "width:250px" %>
             </div>
             <div class="col-auto">
-                <%= submit_tag ("Search"), class: 'btn btn-primary custom' %>
+                <%= submit_tag ("Search"), class: 'btn btn-primary custom_button' %>
             </div>
             <div class="col-auto">
-                <%= link_to "Create", new_post_path, class: 'btn btn-primary custom' %>
+                <%= link_to "Create", new_post_path, class: 'btn btn-primary custom_button' %>
             </div>
             <div class="col-auto">
-               <%= link_to "Upload", upload_posts_path, class: 'btn btn-primary custom' %>
+               <%= link_to "Upload", upload_posts_path, class: 'btn btn-primary custom_button' %>
             </div>
             <div class="col-auto">
-                <%= link_to "Download", posts_path(format: :csv), class: 'btn btn-primary custom' %>
+                <%= link_to "Download", posts_path(format: :csv), class: 'btn btn-primary custom_button' %>
             </div>
         <% end %>
     </div>
@@ -30,7 +36,7 @@
     <div class="card-body"> 
       <table class="display" id="table_id">
           <thead>
-              <tr>
+              <tr class="p-3 mb-2 bg-secondary text-white text-center">
                   <th>Post title</th>
                   <th>Post Description</th>
                   <th>Posted User</th>
@@ -40,15 +46,15 @@
           </thead>
           <tbody>
               <% @posts.each do |post| %>
-                <tr>
+                <tr class="text-center">
                     <td><%= link_to post.title, post, class: 'text-decoration-none', "data-toggle" => 'mediumButton', 'data-target' => post %></td>
                     <td><%= post.description %></td>
                     <td><%= post.created_user.name %></td>
                     <td><%= post.created_at.strftime('%Y/%m/%d') %></td>
-                    <td><%= link_to "Edit", edit_post_path(post),class: 'btn btn-primary' %>
-                    <%= link_to "Destroy", post_path(post),
+                    <td><%= link_to edit_post_path(post),class: 'btn btn-primary operation_button' do %> <i class="fas fa-edit"></i> <% end %>
+                    <%= link_to post_path(post),
                                     method: :delete,
-                                    data: { confirm: "Are you sure?" }, class: 'btn btn-danger' %></td>
+                                    data: { confirm: "Are you sure?" }, class: 'btn btn-danger operation_button' do %><i class="fas fa-trash-alt"></i><% end %></td>
                 </tr>
               <%end%>
           </tbody>
@@ -58,7 +64,5 @@
 </div>
 
 <style>
-.custom {
-    width: 150px !important;
-}
+
 </style>

@@ -32,7 +32,7 @@ class UsersController < ApplicationController
       dir = "#{Rails.root}/app/assets/profiles/"
       FileUtils.mkdir_p(dir) unless File.directory?(dir)
       profilename = user_params[:name]+ "_" + Time.now.strftime('%Y%m%d_%H%M%S') + "." + ActiveStorage::Filename.new(user_params[:profile].original_filename).extension
-      File.open(Rails.root.join('app/assets/', 'images', profilename ), 'wb') do |f|
+      File.open(Rails.root.join('app/assets/images/', 'profiles', profilename ), 'wb') do |f|
           f.write(user_params[:profile].read)
       end
       @user.profile = profilename
@@ -53,8 +53,12 @@ class UsersController < ApplicationController
   # function: Delete user
   # params: id
   def destroy
-    UsersService.deleteUser(params[:id],current_user[:id])
-    redirect_to users_path
+    if (current_user[:id] == params[:id].to_i)
+      redirect_to users_path, notice: Messages::USER_CURRENTLY_LOGIN_DELETE
+    else
+      UsersService.deleteUser(params[:id],current_user[:id])
+      redirect_to users_path
+    end
   end
 
   # function: User Profile
@@ -79,10 +83,12 @@ class UsersController < ApplicationController
     if !@user_profile_form.valid?
       render :edit_profile
     elsif user_profile_params[:new_profile].present?
-      dir = "#{Rails.root}/app/assets/profiles/"
-      FileUtils.mkdir_p(dir) unless File.directory?(dir)
+      # dir = "#{Rails.root}/app/assets/profiles/"
+      # FileUtils.mkdir_p(dir) unless File.directory?(dir)
+      imagefile = "#{Rails.root}/app/assets/images/profiles/" + user_profile_params[:profile]
+      File.delete(imagefile) if File.exist?(imagefile)
       profilename = user_profile_params[:name]+ "_" + Time.now.strftime('%Y%m%d_%H%M%S') + "." + ActiveStorage::Filename.new(user_profile_params[:new_profile].original_filename).extension
-      File.open(Rails.root.join('app/assets/', 'images', profilename ), 'wb') do |f|
+      File.open(Rails.root.join('app/assets/images/', 'profiles', profilename ), 'wb') do |f|
           f.write(user_profile_params[:new_profile].read)
       end
       @user_profile_form.profile = profilename

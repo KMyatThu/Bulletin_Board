@@ -16,7 +16,8 @@ Rails.application.routes.draw do
       get :search_post
     end
     member do
-      patch :post_edit_form
+      post :post_edit_form
+      get :post_edit_form, to: 'posts#edit'
       get :update_confirm
       post :post_update
       get :pop_up

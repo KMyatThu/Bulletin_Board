@@ -60,4 +60,11 @@ class UsersService
     to_date = keyword[:to_date]
     users = UsersRepository.searchuser(name, email, from_date, to_date)
   end
+
+  # function: Find by Email
+  # params: email
+  # return: user
+  def self.find_by_email(email)
+    user = UsersRepository.getUserByEmail(email)
+  end
 end

@@ -4,24 +4,27 @@
     </div>
     <div class="card-body">
         <%= form_with model: @user_profile_form, :url => update_profile_user_path(@user_profile_form.id), :method => :post, :html => { :style => 'width: 80%;' } do |form| %>
-            <ul>
-                <% @user_profile_form.errors.full_messages.each do |msg| %>
-                    <li><%= msg %></li>
-                <% end %>
-            </ul>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label :name %> </div>
-                <div class="col-sm-7"><%= form.text_field :name, class: "form-control", :autocomplete => :off %></div>
+                <div class="col-sm-7">
+                    <%= form.text_field :name, class: "form-control", :autocomplete => :off %>
+                    <div class="text-danger"><% if @user_profile_form.errors[:name].any? %><%= Messages::USER_NAME_VALIDATION %><% end %></div>
+                </div>
             </div>
             <br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label "E-Mail Address" %> </div>
-                <div class="col-sm-7"> <%= form.text_field :email, class: "form-control" %> </div>
+                <div class="col-sm-7"> 
+                    <%= form.text_field :email, class: "form-control" %>
+                    <div class="text-danger"> <% if @user_profile_form.errors[:email].length == 2 %> <%= Messages::USER_EMAIL_VALIDATION %>
+                        <% elsif @user_profile_form.errors[:email].length == 1 %> <%= Messages::USER_EMAIL_REGIX_VALIDATION %> <% end %>
+                    </div>
+                </div>
             </div>
             <br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label "Type" %> </div>
-                <div class="col-sm-7"> <%= form.collection_select :role , User.types, :first, :last, {:prompt => @user, :selected => @user.role.to_i, include_blank: false }, class: 'form-control' %> </div>
+                <div class="col-sm-7"> <%= form.collection_select :role , Constants::TYPES, :first, :last, {:prompt => @user, :selected => @user.role.to_i, include_blank: false }, { class: "form-select" } %> </div>
             </div><br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label :phone %> </div>
@@ -29,7 +32,7 @@
             </div><br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label "Date of Birth" %> </div>
-                <div class="col-sm-7"> <%= form.text_field :dob, id: 'datepicker', :autocomplete => :off, class: "form-control" %> </div>
+                <div class="col-sm-7"> <%= form.date_field :dob, class: "form-control", :value => @user_profile_form.dob %> </div>
             </div><br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label :address %> </div>
@@ -37,7 +40,7 @@
             </div><br/>
             <div class="form-group row mb-3">
               <div class="col-sm-5 col-form-label text-end"> <%= form.label "Old Profile" %> </div>
-              <div class="col-md-7"> <%= image_tag @user.profile, style: 'height:150px;width:auto;' %> </div>
+              <div class="col-md-7"> <%= image_tag 'profiles/'+@user.profile, style: 'height:150px;width:auto;' %> </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label "New Profile" %> </div>

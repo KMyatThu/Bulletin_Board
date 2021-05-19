@@ -49,7 +49,7 @@ class PostsController < ApplicationController
   def create
     isSavePost = PostsService.createPost(post_params,current_user)
     if isSavePost
-      redirect_to root_path
+      redirect_to root_path , notice: Messages::POST_CREATE_SUCCESS
     else
       render :new
     end
@@ -59,18 +59,19 @@ class PostsController < ApplicationController
   # params: id
   # return: post
   def edit
-    @post = PostsService.getPostById(params[:id])
+    post = PostsService.getPostById(params[:id])
+    @post_update_form = PostUpdateForm.new(PostUpdateForm.attributes(post))
   end
 
   # function: post edit form
   # params: post params
   # return: post
   def post_edit_form
-    @post = Post.new(post_params)
-    unless @post.valid?
+    @post_update_form = PostUpdateForm.new(post_update_form_params)
+    unless @post_update_form.valid?
       render :edit
     else
-      redirect_to :action => "update_confirm", title: @post.title, description: @post.description, state: @post.status, id: @post.id
+      redirect_to :action => "update_confirm", title: @post_update_form.title, description: @post_update_form.description, state: @post_update_form.status, id: @post_update_form.id
     end
   end
 
@@ -107,11 +108,17 @@ class PostsController < ApplicationController
   # params: file
   def import
     if (params[:file].nil?)
-      flash.now[:notice] = "Please choose a file."
-      render :upload
-    else 
-      Post.import(params[:file])
-      redirect_to root_path, notice: "CSV uploaded"
+      redirect_to upload_posts_path, notice: Messages::POST_UPLOAD_FILE_VALIDATION
+    elsif !File.extname(params[:file]).eql?(".csv")
+      redirect_to upload_posts_path, notice: Messages::POST_UPLOAD_CSV_FORMAT_ERROR
+    else
+      error_messages = PostsHelper.check_header(Constants::POST_CSV_HEADER,params[:file])
+        if error_messages.present?
+          redirect_to upload_posts_path, notice: error_messages
+        else
+          Post.import(params[:file],current_user.id)
+          redirect_to root_path, notice: Messages::POST_UPLOAD_SUCCESS
+        end
     end
   end
 
@@ -133,5 +140,10 @@ class PostsController < ApplicationController
   # post parameters
   def post_params
     params.require(:post).permit(:id, :title, :description, :status, :create_user_id, :updated_user_id, :updated_at)
+  end
+
+  # post update form params
+  def post_update_form_params
+    params.require(:post_update_form).permit(:id, :title, :description, :status, :create_user_id, :updated_user_id)
   end
 end

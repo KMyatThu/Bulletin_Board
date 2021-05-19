@@ -3,20 +3,18 @@ class SessionsController < ApplicationController
   # function: Login
   # params: email,password
   def create
-    @user = User.find_by(email: params[:user][:email])
+    @user = UsersService.find_by_email(email: params[:user][:email])
     if !@user
-      message = "Email not Exits"
-      redirect_to login_path, notice: message
+      redirect_to login_path, notice: Messages::EMAIL_NOT_EXISTS_VALIDATION
     elsif @user && @user.authenticate(params[:user][:password])
       if params[:remember_me]
         cookies.permanent[:user_id] = @user.id
       else
         cookies[:user_id] = { :value => @user.id, :expires => Time.now + 3600}
       end
-      redirect_to root_path
+      redirect_to root_path, notice: Messages::LOGIN_SUCCESS
     else
-      message = "Incorrect Password!"
-      redirect_to login_path, notice: message
+      redirect_to login_path, notice: Messages::PASSWORD_IS_NOT_CORRECT_VALIDATION
     end
   end
 
@@ -24,6 +22,7 @@ class SessionsController < ApplicationController
   end
 
   def login
+    cookies.delete(:user_id)
     @user = User.new
   end
 
