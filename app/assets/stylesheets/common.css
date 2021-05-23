@@ -4,11 +4,11 @@
 }
 
 .operation_button{
-  width: 50px;
+  margin-right: 20px;
 }
 
 .card_margin{
-  margin-top: 100px;
+  margin: 5% 0 10%;
 }
 
 .fogot_password{
@@ -21,3 +21,12 @@
   margin-bottom: 20px;
 }
 
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+	padding: 0 !important;
+	margin: 0 !important;
+	border: 0 !important;
+}
+
+.card_margin-login{
+  margin: 20% 0;
+}

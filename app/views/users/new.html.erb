@@ -1,8 +1,8 @@
-<div class="card card_option">
-    <div class="card-header">
+<div class="card card_option card_margin border border-success mx-auto">
+    <div class="card-header bg-success text-white border border-success">
         Register
     </div>
-    <div class="card-body">
+    <div class="card-body my-3">
         <%= form_with model: @user, url: create_confirm_users_path, :html => { :style => 'width: 80%;' } do |form| %>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label :name %> </div>
@@ -70,10 +70,3 @@
         <% end %>
     </div>
 </div>
-
-<style>
-.card_option{
-    width: 50rem;
-    margin: 0 auto;
-}
-</style>

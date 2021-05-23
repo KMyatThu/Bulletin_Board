@@ -26,6 +26,10 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+# Cross Origin Resource Sharing
+gem 'rack-cors'
+# Jason web token 2021/05/20
+gem 'jwt'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

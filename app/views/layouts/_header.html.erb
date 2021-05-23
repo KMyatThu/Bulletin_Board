@@ -1,24 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/posts">Bulletin_Board</a>
+    <a class="navbar-brand text-success" href="/posts">Bulletin_Board</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/users">Users</a>
+          <a class="nav-link active text-success" aria-current="page" href="/users">Users</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/posts">Posts</a>
+          <a class="nav-link text-success" href="/posts">Posts</a>
         </li>
       </ul>
       <li class="nav-item navbar-nav dropdown d-flex">
-          <a class="nav-link" href="<%= new_user_path %>">Create User</a>
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <%= current_user.name %>
+          <a class="nav-link text-success" href="<%= new_user_path %>">Create User</a>
+          <a class="nav-link dropdown-toggle text-success" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= current_user.name %><i class="ms-1 fas fa-<%= current_user.role == '0' ? 'user-cog' : 'user'%>"></i>
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <ul class="dropdown-menu end-0" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="/users/<%= current_user.id %>/profile">Profile</a></li>
             <li>
               <%= link_to "Logout", session_path, method: :delete, class: "dropdown-item" %>

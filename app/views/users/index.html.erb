@@ -1,7 +1,5 @@
-<%= flash[:notice] %>
-<div class="py-4">
-<div class="card">
-  <div class="card-header">
+<div class="card card_margin border border-success">
+  <div class="card-header bg-success text-white border border-success">
     User List
   </div>
 
@@ -17,28 +15,28 @@
                 <label>Name:</label>
             </div>
             <div class="col-auto">
-                <%= text_field_tag :name, params[:name], class: "form-control" %>
+                <%= text_field_tag :name, params[:name], class: "form-control border border-success" %>
             </div>
             <div class="col-auto align-self-center">
                 <label>Email:</label>
             </div>
             <div class="col-auto">
-                <%= text_field_tag :email, params[:email], class: "form-control" %>
+                <%= text_field_tag :email, params[:email], class: "form-control border border-success" %>
             </div>
             <div class="col-auto align-self-center">
                 <label>From:</label>
             </div>
             <div class="col-auto">
-                <%= date_field_tag :from_date, params[:from_date], autocomplete: 'off', class: "form-control" %>
+                <%= date_field_tag :from_date, params[:from_date], autocomplete: 'off', class: "form-control border border-success" %>
             </div>
             <div class="col-auto align-self-center">
                 <label>to:</label>
             </div>
             <div class="col-auto">
-                <%= date_field_tag :to_date, params[:to_date], autocomplete: 'off', class: "form-control" %>
+                <%= date_field_tag :to_date, params[:to_date], autocomplete: 'off', class: "form-control border border-success" %>
             </div>
             <div class="col-auto">
-                <%= submit_tag ("Search"), class: 'btn btn-primary custom_button' %>
+                <%= submit_tag ("Search"), class: 'btn btn-success custom_button' %>
             </div>
         <% end %>
     </div>
@@ -46,7 +44,7 @@
   <div class="card-body"> 
     <table class="display" id="table_id">
         <thead>
-            <tr class="p-3 mb-2 bg-secondary text-white text-center">
+            <tr class="p-3 mb-2 bg-cadetblue text-white text-center">
                 <th>No</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -64,7 +62,7 @@
             <% @users.each_with_index do |user, index| %>
             <tr class="text-center">
                 <td><%= index + 1 %></td>
-                <td><%= link_to user.name, user, class: 'text-decoration-none' %></td>
+                <td><%= link_to user.name, user, class: 'text-decoration-none text-success' %></td>
                 <td><%= user.email %></td>
                 <td><%= user.created_user.name %></td>
                 <td><%= user.role == "0" ? 'Admin' : 'User' %></td>
@@ -74,11 +72,10 @@
                 <td><%= user.created_at.strftime('%Y/%m/%d') %></td>
                 <td><%= user.updated_at.strftime('%Y/%m/%d') %></td>
                 <td><%= link_to user_path(user), method: :delete,
-                    data: { confirm: "Are you sure?" }, class: "btn btn-danger operation_button" do %><i class="fas fa-trash-alt"></i><% end %></td>
+                    data: { confirm: "Are you sure?" } do %><i class="fas fa-trash-alt text-danger"></i><% end %></td>
             </tr>
             <%end%>
         </tbody>
     </table>
   </div>
-</div>
 </div>

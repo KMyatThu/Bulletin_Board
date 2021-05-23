@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   # function: User List
   # Return: userlist
   def index
-    @users = UsersService.userList
+    @users = UsersService.userList(current_user)
   end
 
   # function: User Detai

@@ -7,11 +7,13 @@ class SessionsController < ApplicationController
     if !@user
       redirect_to login_path, notice: Messages::EMAIL_NOT_EXISTS_VALIDATION
     elsif @user && @user.authenticate(params[:user][:password])
-      if params[:remember_me]
-        cookies.permanent[:user_id] = @user.id
-      else
-        cookies[:user_id] = { :value => @user.id, :expires => Time.now + 3600}
-      end
+      token = encode_token({user_id: @user.id})
+      logger.debug "Person attributes hash: #{token}"
+        if params[:remember_me]
+          cookies.permanent[:user_id] = @user.id
+        else
+          cookies[:user_id] = { :value => token, :expires => Time.now + 3600}
+        end
       redirect_to root_path, notice: Messages::LOGIN_SUCCESS
     else
       redirect_to login_path, notice: Messages::PASSWORD_IS_NOT_CORRECT_VALIDATION

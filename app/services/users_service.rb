@@ -1,7 +1,7 @@
 class UsersService
   # user list
-  def self.userList
-    @users = UsersRepository.getAllUsers
+  def self.userList(current_user)
+    @users = UsersRepository.getAllUsers(current_user.id, current_user.role)
   end
 
   # function: get user detail

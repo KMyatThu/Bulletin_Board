@@ -29,7 +29,7 @@
             </div><br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label "Type" %> </div>
-                <div class="col-sm-7"> <%= form.text_field :role,:value => User.types.values[@user.role.to_i], class: "form-control", :readonly => true %> </div>
+                <div class="col-sm-7"> <%= form.text_field :role,:value => Constants::TYPES.values[@user.role.to_i], class: "form-control", :readonly => true %> </div>
             </div><br/>
             <div class="form-group row">
                 <div class="col-sm-5 col-form-label text-end"> <%= form.label :phone %> </div>

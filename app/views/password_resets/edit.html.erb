@@ -1,10 +1,8 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Reset Password</div>
+
+            <div class="card card_option card_margin border border-success mx-auto">
+                <div class="card-header bg-success text-white border border-success">Reset Password</div>
                 <% if notice %><div class="alert alert-danger"><%= notice %> </div> <% end %>
-                <div class="card-body">
+                <div class="card-body my-3">
                     <%= form_for @user, :url => password_reset_path(params[:id]) do |f| %>
                         <% if @user.errors.any? %>
                           <div class="error_messages">

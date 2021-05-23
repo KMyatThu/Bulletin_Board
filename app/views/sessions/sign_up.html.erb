@@ -1,9 +1,8 @@
-<h1> Sing up </h1>
-<div class="card card_option">
-    <div class="card-header">
-        Register
+<div class="card card_option card_margin border border-success mx-auto">
+    <div class="card-header bg-success text-white border border-success">
+        Sign Up
     </div>
-    <div class="card-body">
+    <div class="card-body my-3">
         <%= form_with model: @user, url: create_account_path, :html => { :style => 'width: 80%;' } do |form| %>
             <ul>
                 <% @user.errors.full_messages.each do |msg| %>
@@ -42,10 +41,3 @@
         <% end %>
     </div>
 </div>
-
-<style>
-.card_option{
-    width: 50rem;
-    margin: 0 auto;
-}
-</style>

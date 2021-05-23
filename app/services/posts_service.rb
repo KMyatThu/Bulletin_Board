@@ -1,7 +1,7 @@
 class PostsService
     # post list
-    def self.postList
-      @posts = PostsRepository.getPostList
+    def self.postList(role,id)
+      @posts = PostsRepository.getPostList(role,id)
     end
 
     # function post detail

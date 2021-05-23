@@ -1,8 +1,8 @@
-<div class="card card_option">
-    <div class="card-header">
+<div class="card card_option card_margin border border-success mx-auto">
+    <div class="card-header bg-success text-white border border-success">
         Create Post
     </div>
-    <div class="card-body">
+    <div class="card-body my-3">
         <%= form_with model: @post, url: post_update_post_path, :html => { :style => 'width: 80%;' } do |form| %>
             <ul>
                 <% @post.errors.full_messages.each do |msg| %>
@@ -35,10 +35,3 @@
         <% end %>
     </div>
 </div>
-
-<style>
-.card_option{
-    width: 50rem;
-    margin: 0 auto;
-}
-</style>

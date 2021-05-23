@@ -1,8 +1,8 @@
-<div class="card card_option">
-    <div class="card-header">
+<div class="card card_option card_option card_margin border border-success mx-auto">
+    <div class="card-header bg-success text-white border border-success">
         Create Post
     </div>
-    <div class="card-body">
+    <div class="card-body my-3">
         <%= form_with model: @post, :html => { :style => 'width: 80%;' } do |form| %>
             <ul>
                 <% @post.errors.full_messages.each do |msg| %>
@@ -22,7 +22,7 @@
             <div class="form-group row mb-0">
                 <div class="col-sm-5 col-form-label text-end"> </div>
                 <div class="col-sm-7">
-                    <%= form.submit "Confirm", class: 'btn btn-primary' %>
+                    <%= form.submit "Confirm", class: 'btn btn-success' %>
                     <%= link_to "Back", 'javascript:history.go(-1);', class: 'btn btn-secondary' %>
                 </div>
             </div>

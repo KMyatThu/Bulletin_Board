@@ -1,8 +1,12 @@
 class UsersRepository
   # function: get all Users
   # return: users
-  def self.getAllUsers
-    @users = User.where(deleted_user_id: nil)
+  def self.getAllUsers(id, role)
+    if role == '0'
+      @users = User.where(deleted_user_id: nil)
+    else
+      @users = User.where(deleted_user_id: nil).where(create_user_id: id)
+    end
   end
 
   # function: get user by id

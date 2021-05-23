@@ -1,26 +1,21 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Forgot password?</div>
-                <% if notice %><div class="alert alert-danger"><%= notice %> </div> <% end %>
-                <div class="card-body">
-                    <%= form_tag password_resets_path, :method => :post do %>
-                        <div class="form-group row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">Email:</label>
+<div class="card card_option card_margin border border-success mx-auto">
+    <div class="card-header bg-success text-white border border-success">Forgot password?</div>
+        <% if notice %><div class="alert alert-danger"><%= notice %> </div> <% end %>
+    <div class="card-body my-3">
+        <%= form_tag password_resets_path, :method => :post do %>
+            <div class="form-group row mb-3">
+                <label for="email" class="col-md-4 col-form-label text-md-right">Email:</label>
 
-                            <div class="col-md-6">
-                             <%= email_field_tag :email, params[:email], class: 'form-control', :required => 'true'%>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <%= submit_tag "Reset Password" , class: "btn btn-primary center-block"%>
-                            </div>
-                        </div>
-                    <% end %>
+                <div class="col-md-6">
+                    <%= email_field_tag :email, params[:email], class: 'form-control', :required => 'true'%>
                 </div>
             </div>
-        </div>
+            <div class="form-group row mb-0">
+                <div class="col-md-8 offset-md-4">
+                    <%= submit_tag "Reset Password" , class: "btn btn-success center-block"%>
+                </div>
+            </div>
+        <% end %>
     </div>
 </div>
+        

@@ -1,10 +1,14 @@
 class PostsRepository
   # function: Get All Post List
   # return: posts
-  def self.getPostList
-    @posts = Post.where(deleted_user_id: nil)
+  def self.getPostList(role,id)
+    if role == '0'
+      @posts = Post.where(deleted_user_id: nil)
+    else
+      @posts = Post.where(deleted_user_id: nil).where(create_user_id: id)
+    end
   end
-
+  
   # function: Get Post Detail
   # params: id
   # return: post
