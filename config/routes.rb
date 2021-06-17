@@ -49,4 +49,9 @@ Rails.application.routes.draw do
   get '/sign_up' => 'sessions#sign_up'
   post '/create_account' => 'sessions#create_account'
   get '/create_account' => 'sessions#sign_up'
+
+  post 'pictures/recognition', as: :recognition
+
+  match "/404", :to => "errors#not_found", :via => :all
+  get "/500", :to => "errors#internal_server_error", :via => :all
 end

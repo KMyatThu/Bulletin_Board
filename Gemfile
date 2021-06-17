@@ -30,6 +30,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'rack-cors'
 # Jason web token 2021/05/20
 gem 'jwt'
+# for exception_handler
+gem 'excon', '~> 0.45.4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

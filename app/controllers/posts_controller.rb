@@ -3,6 +3,7 @@ class PostsController < ApplicationController
   # function: index(post List)
   # return: posts
   def index
+    dd
     @posts = PostsService.postList(current_user.role,current_user.id)
     respond_to do |format|
       format.html
